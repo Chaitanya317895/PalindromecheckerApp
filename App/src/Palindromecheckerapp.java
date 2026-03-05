@@ -7,7 +7,7 @@ public class Palindromecheckerapp {
             return true;
 
         if (str.charAt(start) != str.charAt(end))
-            return false;
+            return false;  
 
         return isPalindrome(str, start + 1, end - 1);
     }
