@@ -1,64 +1,71 @@
 import java.util.*;
 
-interface PalindromeStrategy {
-    boolean check(String input);
-}
+public class Palindromecheckerapp {
 
-class StackStrategy implements PalindromeStrategy {
-    public boolean check(String input) {
+    static boolean arrayMethod(String input) {
+        char[] arr = input.toCharArray();
+        int start = 0;
+        int end = arr.length - 1;
+
+        while (start < end) {
+            if (arr[start] != arr[end])
+                return false;
+            start++;
+            end--;
+        }
+        return true;
+    }
+
+    static boolean stackMethod(String input) {
         Stack<Character> stack = new Stack<>();
         for (char c : input.toCharArray())
             stack.push(c);
+
         for (char c : input.toCharArray())
             if (c != stack.pop())
                 return false;
+
         return true;
     }
-}
 
-class DequeStrategy implements PalindromeStrategy {
-    public boolean check(String input) {
+    static boolean dequeMethod(String input) {
         Deque<Character> deque = new ArrayDeque<>();
         for (char c : input.toCharArray())
             deque.addLast(c);
+
         while (deque.size() > 1)
             if (!deque.removeFirst().equals(deque.removeLast()))
                 return false;
+
         return true;
     }
-}
 
-class PalindromeContext {
-    private PalindromeStrategy strategy;
-
-    public PalindromeContext(PalindromeStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public void setStrategy(PalindromeStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public boolean execute(String input) {
-        return strategy.check(input);
-    }
-}
-
-public class Palindromecheckerapp {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        PalindromeContext context = new PalindromeContext(new StackStrategy());
+        long start1 = System.nanoTime();
+        boolean result1 = arrayMethod(input);
+        long end1 = System.nanoTime();
 
-        boolean result = context.execute(input);
+        long start2 = System.nanoTime();
+        boolean result2 = stackMethod(input);
+        long end2 = System.nanoTime();
 
-        if (result)
-            System.out.println("The string is a Palindrome");
-        else
-            System.out.println("The string is NOT a Palindrome");
+        long start3 = System.nanoTime();
+        boolean result3 = dequeMethod(input);
+        long end3 = System.nanoTime();
+
+        System.out.println("Array Method Result: " + result1);
+        System.out.println("Execution Time: " + (end1 - start1) + " ns");
+
+        System.out.println("Stack Method Result: " + result2);
+        System.out.println("Execution Time: " + (end2 - start2) + " ns");
+
+        System.out.println("Deque Method Result: " + result3);
+        System.out.println("Execution Time: " + (end3 - start3) + " ns");
 
         sc.close();
     }
