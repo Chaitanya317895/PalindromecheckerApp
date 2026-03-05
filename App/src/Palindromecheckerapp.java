@@ -7,7 +7,7 @@ public class Palindromecheckerapp {
             return true;
 
         if (str.charAt(start) != str.charAt(end))
-            return false;  
+            return false;
 
         return isPalindrome(str, start + 1, end - 1);
     }
@@ -20,7 +20,7 @@ public class Palindromecheckerapp {
 
         if (isPalindrome(input, 0, input.length() - 1))
             System.out.println("The string is a Palindrome");
-        else
+        else 
             System.out.println("The string is NOT a Palindrome");
 
         sc.close();
